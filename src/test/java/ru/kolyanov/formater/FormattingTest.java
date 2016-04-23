@@ -1,11 +1,11 @@
 package ru.kolyanov.formater;
 
 import org.junit.Test;
-import ru.kolyanov.input.IReader;
-import ru.kolyanov.input.ReaderException;
-import ru.kolyanov.input.StringReader;
+import ru.kolyanov.input.*;
+import ru.kolyanov.output.FileWriter;
 import ru.kolyanov.output.IWriter;
 import ru.kolyanov.output.StringWriter;
+import ru.kolyanov.output.WritingException;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -39,4 +39,5 @@ public class FormattingTest {
     public void testFormatting3() throws FormattingException, ReaderException {
         formatting("{}", "{\n}\n");
     }
+
 }

@@ -1,47 +1,31 @@
 package ru.kolyanov.input;
 
+import java.io.IOException;
+import java.io.StringBufferInputStream;
+
 /**
  * this class contain methods for reading data from string
  */
-public class StringReader implements IReader {
-
-    private char[] string;
-    private int nextSymbol;
+public class StringReader extends BaseReader {
 
     /**
      * constructor
-     * @param string input data
+     * @param data the input string
+     * @throws ReaderException if file not found
      */
-    public StringReader(final String string) {
-        this.string = string.toCharArray();
-        this.nextSymbol = 0;
-    }
-
-    /**
-     * method for get single symbol from string
-     * @return next symbol from string
-     * @throws ReaderException in the case of reaching end of line
-     */
-    public int getSymbol() throws ReaderException {
+    public StringReader(final String data) throws ReaderException {
+        inputStream = new StringBufferInputStream(data);
         try {
-            char symbol = string[nextSymbol];
-            nextSymbol++;
-            return (int) symbol;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return -1;
-        }
-    }
-    /**
-     * It does not move to the next character
-     * @return next symbol from string
-     * @throws ReaderException in the case of reaching end of line
-     */
-    public int nextSymbol() throws ReaderException {
-        try {
-            char symbol = string[nextSymbol];
-            return (int) symbol;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return -1;
+            buffer = new byte[inputStream.available()];
+            inputStream.read(buffer);
+        } catch (IOException e) {
+            throw new ReaderException(e);
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                throw new ReaderException(e);
+            }
         }
     }
 }
