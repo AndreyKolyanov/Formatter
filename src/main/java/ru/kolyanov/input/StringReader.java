@@ -22,13 +22,26 @@ public class StringReader implements IReader {
      * @return next symbol from string
      * @throws ReaderException in the case of reaching end of line
      */
-    public char getSymbol() throws ReaderException {
+    public int getSymbol() throws ReaderException {
         try {
             char symbol = string[nextSymbol];
             nextSymbol++;
-            return symbol;
+            return (int) symbol;
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ReaderException(e);
+            return -1;
+        }
+    }
+    /**
+     * It does not move to the next character
+     * @return next symbol from string
+     * @throws ReaderException in the case of reaching end of line
+     */
+    public int nextSymbol() throws ReaderException {
+        try {
+            char symbol = string[nextSymbol];
+            return (int) symbol;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return -1;
         }
     }
 }

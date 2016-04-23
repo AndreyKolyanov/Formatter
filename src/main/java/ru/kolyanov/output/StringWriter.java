@@ -20,6 +20,7 @@ public class StringWriter implements IWriter {
      */
     public void printLine(final String string) throws WritingException {
             data.append(string);
+            data.append("\n");
     }
 
     /**

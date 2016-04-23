@@ -10,4 +10,9 @@ public interface IWriter {
      * @throws WritingException if there is an error
      */
     void printLine(String string) throws WritingException;
+    /**
+     * method return formatted lines
+     * @return data
+     */
+    String getLines();
 }

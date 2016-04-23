@@ -6,10 +6,17 @@ package ru.kolyanov.input;
 public interface IReader {
 
     /**
-     *
-     * @return next symbol from stream
+     * It move to the next character
+     * @return next symbol and remove from stream
      * @throws ReaderException to describe exceptions
      */
 
-    char getSymbol() throws ReaderException;
+    int getSymbol() throws ReaderException;
+
+    /**
+     * method It does not move to the next character
+     * @return next symbol from stream
+     * @throws ReaderException to describe exceptions
+     */
+    int nextSymbol() throws ReaderException;
 }
