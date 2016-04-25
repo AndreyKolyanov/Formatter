@@ -36,11 +36,12 @@ public class FixedOffsetTable implements IOffsetTable {
     /**
      * method for calculate offset
      * @param string string with defining symbol
-     * @return new offset
+     * @return string with new offset
      * @throws OffsetException if it is impossible to calculate the indentation
      */
-    public String calculateOffset(final String string) throws OffsetException {
+    public String calculateOffset(final String inputString) throws OffsetException {
         int currentOffset = 0;
+        String string = inputString.trim();
         char symbol = string.charAt(string.length() - 1);
         if (nestingLevel.containsKey(symbol)) {
             currentNestingLevel += nestingLevel.get(symbol);

@@ -25,7 +25,7 @@ public class FormattingTest {
     }
     @Test
     public void testFormatting() throws FormattingException, ReaderException {
-        formatting("class Main {asd;asdaa;asd;{asdsd;dss;}}",
+        formatting("class Main {asd; asdaa;asd;{asdsd;dss;}}",
                 "class Main {\n    asd;\n    asdaa;\n    asd;\n    {\n        asdsd;\n        dss;\n    }\n}\n");
     }
 

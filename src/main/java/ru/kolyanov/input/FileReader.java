@@ -19,8 +19,6 @@ public class FileReader extends BaseReader {
             inputStream = new FileInputStream(file);
             buffer = new byte[inputStream.available()];
             inputStream.read(buffer);
-        } catch (FileNotFoundException e) {
-            throw new ReaderException(e);
         } catch (IOException e) {
             throw new ReaderException(e);
         }
