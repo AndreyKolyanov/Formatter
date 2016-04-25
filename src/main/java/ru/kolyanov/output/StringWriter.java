@@ -30,4 +30,9 @@ public class StringWriter implements IWriter {
     public String getLines() {
         return data.toString();
     }
+
+    @Override
+    public void write() throws WritingException {
+        System.out.println(data);
+    }
 }

@@ -20,16 +20,11 @@ public class FileWriter implements IWriter {
     /**
      * method writing data
      * @param string writable string
-     * @throws WritingException if there is an error
      */
-    public void printLine(final String string) throws WritingException {
+    public void printLine(final String string) {
         data.append(string);
         data.append("\n");
-        try (java.io.FileWriter fileWriter = new java.io.FileWriter(filename)) {
-            fileWriter.append(data);
-        } catch (IOException e) {
-            throw new WritingException(e);
-        }
+
     }
     /**
      * method return formatted lines
@@ -37,5 +32,14 @@ public class FileWriter implements IWriter {
      */
     public String getLines() {
         return data.toString();
+    }
+
+    @Override
+    public void write() throws WritingException {
+        try (java.io.FileWriter fileWriter = new java.io.FileWriter(filename)) {
+            fileWriter.append(data);
+        } catch (IOException e) {
+            throw new WritingException(e);
+        }
     }
 }

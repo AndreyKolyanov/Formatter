@@ -15,4 +15,10 @@ public interface IWriter {
      * @return data
      */
     String getLines();
+
+    /**
+     * method write strings in file
+     * @throws WritingException if there is an error
+     */
+    void write() throws WritingException;
 }

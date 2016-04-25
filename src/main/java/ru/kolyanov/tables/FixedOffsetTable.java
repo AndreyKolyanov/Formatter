@@ -20,12 +20,12 @@ public class FixedOffsetTable implements IOffsetTable {
      * constructor creating nestingLevel
      */
     public FixedOffsetTable() {
-        nestingLevel = new HashMap<Character, Integer>();
+        nestingLevel = new HashMap<>();
         nestingLevel.put('{', 1);
         nestingLevel.put('}', -1);
         nestingLevel.put(';', 0);
 
-        table = new HashMap<Character, Integer>();
+        table = new HashMap<>();
         table.put(';', BASE_OFFSET_LENGTH);
         table.put('{', BASE_OFFSET_LENGTH);
         table.put('}', 0);
@@ -35,7 +35,7 @@ public class FixedOffsetTable implements IOffsetTable {
 
     /**
      * method for calculate offset
-     * @param string string with defining symbol
+     * @param inputString string with defining symbol
      * @return string with new offset
      * @throws OffsetException if it is impossible to calculate the indentation
      */
