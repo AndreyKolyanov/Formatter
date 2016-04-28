@@ -6,6 +6,8 @@ import ru.kolyanov.output.FileWriter;
 import ru.kolyanov.output.IWriter;
 import ru.kolyanov.output.StringWriter;
 import ru.kolyanov.output.WritingException;
+import ru.kolyanov.tables.FixedNewLineTable;
+import ru.kolyanov.tables.FixedOffsetTable;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -19,7 +21,7 @@ public class FormattingTest {
     public void formatting(String str, String actual) throws FormattingException, ReaderException{
         reader = new StringReader(str);
         writer = new StringWriter();
-        formatter = new Formatter();
+        formatter = new Formatter(new FixedNewLineTable(), new FixedOffsetTable());
         formatter.format(reader, writer);
         assertEquals("fail", actual, writer.getLines());
     }

@@ -9,8 +9,8 @@ public class OutputTests {
     @Test
     public void testOutput() throws WritingException{
         writer = new StringWriter();
-        writer.printLine("hello\n");
+        writer.printLine("hello");
         writer.printLine("world");
-        assertEquals("output failed", "hello\nworld", writer.getLines());
+        assertEquals("output failed", "hello\nworld\n", writer.getLines());
     }
 }

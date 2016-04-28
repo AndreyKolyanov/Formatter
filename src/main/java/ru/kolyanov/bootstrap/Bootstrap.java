@@ -10,13 +10,15 @@ import ru.kolyanov.output.FileWriter;
 import ru.kolyanov.output.IWriter;
 import ru.kolyanov.output.StringWriter;
 import ru.kolyanov.output.WritingException;
+import ru.kolyanov.tables.FixedNewLineTable;
+import ru.kolyanov.tables.FixedOffsetTable;
 
 import java.util.IllegalFormatException;
 
 /**
  * bootstrap class
  */
-public class Bootstrap {
+public final class Bootstrap {
 
 
     /**
@@ -55,7 +57,7 @@ public class Bootstrap {
             using();
         }
 
-        Formatter formatter = new Formatter();
+        Formatter formatter = new Formatter(new FixedNewLineTable(), new FixedOffsetTable());
         formatter.format(reader, writer);
         writer.write();
     }

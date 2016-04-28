@@ -7,24 +7,36 @@ import ru.kolyanov.output.WritingException;
 import ru.kolyanov.tables.*;
 
 /**
- * class for formater
+ * class for formatter
  */
 public class Formatter implements IFormatter {
+
+    private INewLineTable newLineTable;
+    private IOffsetTable offsetTable;
+
     /**
-     * method provide formater input data
+     * constructor
+     * @param newLineTable table for make new line
+     * @param offsetTable table for make offset
+     */
+    public Formatter(final INewLineTable newLineTable, final IOffsetTable offsetTable) {
+        this.newLineTable = newLineTable;
+        this.offsetTable = offsetTable;
+    }
+    /**
+     * method provide formatter input data
      * @param reader for getting input data
      * @param writer for writing of formatted data
      * @throws FormattingException if there is an error
      */
     public void format(final IReader reader, final IWriter writer) throws FormattingException {
-        INewLineTable table = new FixedNewLineTable();
-        IOffsetTable offsetTable = new FixedOffsetTable();
+
         StringBuilder buffer = new StringBuilder();
             try {
                 while (reader.nextSymbol() != -1) {
                     char symbol = (char) reader.getSymbol();
                     buffer.append(symbol);
-                    if (table.get(symbol)) {
+                    if (newLineTable.get(symbol)) {
                         writer.printLine(offsetTable.calculateOffset(buffer.toString()));
                         buffer.delete(0, buffer.length());
                     }
