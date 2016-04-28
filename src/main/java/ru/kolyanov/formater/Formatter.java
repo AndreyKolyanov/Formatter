@@ -1,10 +1,13 @@
 package ru.kolyanov.formater;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.kolyanov.input.IReader;
 import ru.kolyanov.input.ReaderException;
 import ru.kolyanov.output.IWriter;
 import ru.kolyanov.output.WritingException;
 import ru.kolyanov.tables.*;
+
 
 /**
  * class for formatter
@@ -13,7 +16,10 @@ public class Formatter implements IFormatter {
 
     private INewLineTable newLineTable;
     private IOffsetTable offsetTable;
-
+    /**
+     * logger
+     */
+     final static Logger logger =  LoggerFactory.getLogger(Formatter.class);
     /**
      * constructor
      * @param newLineTable table for make new line
@@ -42,10 +48,19 @@ public class Formatter implements IFormatter {
                     }
                 }
             } catch (OffsetException e) {
+                if (logger.isErrorEnabled()) {
+                    logger.error("An error in the calculation of the indentation: " + e.getMessage());
+                }
                 throw new FormattingException(e);
             } catch (ReaderException e) {
+                if (logger.isErrorEnabled()) {
+                    logger.error("Reading error: " + e.getMessage());
+                }
                 throw new FormattingException(e);
             } catch (WritingException e) {
+                if (logger.isErrorEnabled()) {
+                    logger.error("Writing error: " + e.getMessage());
+                }
                 throw new FormattingException(e);
             }
     }
