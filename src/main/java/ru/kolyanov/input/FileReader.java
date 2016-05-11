@@ -5,9 +5,10 @@ import java.io.*;
 /**
  * this class contain methods for reading data from file
  */
-public class FileReader extends BaseReader {
+public class FileReader implements IReader {
 
-    private File file;
+
+    private InputStream inputStream;
     /**
      * constructor
      * @param filename name of reading file
@@ -15,13 +16,28 @@ public class FileReader extends BaseReader {
      */
     public FileReader(final String filename) throws ReaderException {
         try {
-            file = new File(filename);
+            File file = new File(filename);
             inputStream = new FileInputStream(file);
-            buffer = new byte[inputStream.available()];
-            inputStream.read(buffer);
         } catch (IOException e) {
             throw new ReaderException(e);
         }
     }
 
+    @Override
+    public int getSymbol() throws ReaderException {
+        try {
+            int code = inputStream.read();
+            if (code == -1){
+                throw new ReaderException(new Exception("End o file"));
+            }
+            return code;
+        } catch (IOException e) {
+            throw new ReaderException(e);
+        }
+    }
+
+    @Override
+    public void close() throws IOException {
+        inputStream.close();
+    }
 }

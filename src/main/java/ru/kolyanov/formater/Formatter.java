@@ -8,6 +8,8 @@ import ru.kolyanov.output.IWriter;
 import ru.kolyanov.output.WritingException;
 import ru.kolyanov.tables.*;
 
+import java.io.IOException;
+
 
 /**
  * class for formatter
@@ -15,7 +17,7 @@ import ru.kolyanov.tables.*;
 public class Formatter implements IFormatter {
 
     private INewLineTable newLineTable;
-    private IOffsetTable offsetTable;
+    private OffsetCalculator offsetCalculator;
     /**
      * logger
      */
@@ -23,11 +25,11 @@ public class Formatter implements IFormatter {
     /**
      * constructor
      * @param newLineTable table for make new line
-     * @param offsetTable table for make offset
+     * @param offsetCalculator table for make offset
      */
-    public Formatter(final INewLineTable newLineTable, final IOffsetTable offsetTable) {
+    public Formatter(final INewLineTable newLineTable, final OffsetCalculator offsetCalculator) {
         this.newLineTable = newLineTable;
-        this.offsetTable = offsetTable;
+        this.offsetCalculator = offsetCalculator;
     }
     /**
      * method provide formatter input data
@@ -39,11 +41,11 @@ public class Formatter implements IFormatter {
 
         StringBuilder buffer = new StringBuilder();
             try {
-                while (reader.nextSymbol() != -1) {
+                while (true) {
                     char symbol = (char) reader.getSymbol();
                     buffer.append(symbol);
                     if (newLineTable.get(symbol)) {
-                        writer.printLine(offsetTable.calculateOffset(buffer.toString()));
+                        writer.printLine(offsetCalculator.calculateOffset(buffer.toString()));
                         buffer.delete(0, buffer.length());
                     }
                 }
@@ -56,12 +58,17 @@ public class Formatter implements IFormatter {
                 if (logger.isErrorEnabled()) {
                     logger.error("Reading error: " + e.getMessage());
                 }
-                throw new FormattingException(e);
             } catch (WritingException e) {
                 if (logger.isErrorEnabled()) {
                     logger.error("Writing error: " + e.getMessage());
                 }
                 throw new FormattingException(e);
+            } finally {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    throw new FormattingException(e);
+                }
             }
     }
 }

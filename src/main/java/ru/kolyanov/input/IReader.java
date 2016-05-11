@@ -1,9 +1,12 @@
 package ru.kolyanov.input;
 
+import java.io.Closeable;
+import java.io.IOException;
+
 /**
  * interface for input
  */
-public interface IReader {
+public interface IReader extends Closeable {
 
     /**
      * It move to the next character
@@ -13,10 +16,6 @@ public interface IReader {
 
     int getSymbol() throws ReaderException;
 
-    /**
-     * method It does not move to the next character
-     * @return next symbol from stream
-     * @throws ReaderException to describe exceptions
-     */
-    int nextSymbol() throws ReaderException;
+    @Override
+    void close() throws IOException;
 }

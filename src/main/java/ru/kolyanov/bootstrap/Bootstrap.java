@@ -2,6 +2,7 @@ package ru.kolyanov.bootstrap;
 
 import ru.kolyanov.formater.Formatter;
 import ru.kolyanov.formater.FormattingException;
+import ru.kolyanov.formater.OffsetCalculator;
 import ru.kolyanov.input.FileReader;
 import ru.kolyanov.input.IReader;
 import ru.kolyanov.input.ReaderException;
@@ -57,7 +58,8 @@ public final class Bootstrap {
             using();
         }
 
-        Formatter formatter = new Formatter(new FixedNewLineTable(), new FixedOffsetTable());
+        OffsetCalculator offsetCalculator = new OffsetCalculator(new FixedOffsetTable(), 4);
+        Formatter formatter = new Formatter(new FixedNewLineTable(), offsetCalculator);
         formatter.format(reader, writer);
         writer.write();
     }

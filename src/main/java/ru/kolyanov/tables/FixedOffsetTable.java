@@ -2,6 +2,7 @@ package ru.kolyanov.tables;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * class describe tables for offsets
@@ -12,7 +13,6 @@ public class FixedOffsetTable implements IOffsetTable {
      * the constant equals length base offset
      */
     public static final int BASE_OFFSET_LENGTH = 4;
-    private int currentNestingLevel;
 
     private HashMap<Character, Integer> nestingLevel;
     private HashMap<Character, Integer> table;
@@ -29,37 +29,15 @@ public class FixedOffsetTable implements IOffsetTable {
         table.put(';', BASE_OFFSET_LENGTH);
         table.put('{', BASE_OFFSET_LENGTH);
         table.put('}', 0);
-
-        currentNestingLevel = 0;
     }
 
-    /**
-     * method for calculate offset
-     * @param inputString string with defining symbol
-     * @return string with new offset
-     * @throws OffsetException if it is impossible to calculate the indentation
-     */
-    public String calculateOffset(final String inputString) throws OffsetException {
-        int currentOffset = 0;
-        String string = inputString.trim();
-        char symbol = string.charAt(string.length() - 1);
-        if (nestingLevel.containsKey(symbol)) {
-            currentNestingLevel += nestingLevel.get(symbol);
-        }
-        if (table.containsKey(symbol)) {
-            currentOffset = (currentNestingLevel * BASE_OFFSET_LENGTH)
-                    - (nestingLevel.get(symbol) * table.get(symbol));
-        }
-        return (makeOffset(currentOffset)) + string;
+    @Override
+    public Map<Character, Integer> getOffsetTable() {
+        return table;
     }
 
-    private String makeOffset(final int offset) throws OffsetException {
-        try {
-            char[] array = new char[offset];
-            Arrays.fill(array, ' ');
-            return new String(array);
-        } catch (NegativeArraySizeException e) {
-            throw new OffsetException(e);
-        }
+    @Override
+    public Map<Character, Integer> getNestingLevelTable() {
+        return nestingLevel;
     }
 }

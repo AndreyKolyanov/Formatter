@@ -21,7 +21,8 @@ public class FormattingTest {
     public void formatting(String str, String actual) throws FormattingException, ReaderException{
         reader = new StringReader(str);
         writer = new StringWriter();
-        formatter = new Formatter(new FixedNewLineTable(), new FixedOffsetTable());
+        OffsetCalculator offsetCalculator = new OffsetCalculator(new FixedOffsetTable(), 4);
+        formatter = new Formatter(new FixedNewLineTable(), offsetCalculator);
         formatter.format(reader, writer);
         assertEquals("fail", actual, writer.getLines());
     }
