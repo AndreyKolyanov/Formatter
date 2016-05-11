@@ -1,5 +1,8 @@
 package ru.kolyanov.input;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 
 /**
@@ -9,6 +12,7 @@ public class FileReader implements IReader {
 
 
     private InputStream inputStream;
+    private Logger logger = LoggerFactory.getLogger(FileReader.class);
     /**
      * constructor
      * @param filename name of reading file
@@ -18,6 +22,7 @@ public class FileReader implements IReader {
         try {
             File file = new File(filename);
             inputStream = new FileInputStream(file);
+            logger.info("Open file: " + filename);
         } catch (IOException e) {
             throw new ReaderException(e);
         }
@@ -27,7 +32,7 @@ public class FileReader implements IReader {
     public int getSymbol() throws ReaderException {
         try {
             int code = inputStream.read();
-            if (code == -1){
+            if (code == -1) {
                 throw new ReaderException(new Exception("End o file"));
             }
             return code;
@@ -39,5 +44,6 @@ public class FileReader implements IReader {
     @Override
     public void close() throws IOException {
         inputStream.close();
+        logger.info("Close file");
     }
 }

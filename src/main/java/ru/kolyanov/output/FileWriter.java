@@ -1,5 +1,8 @@
 package ru.kolyanov.output;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 
 /**
@@ -9,6 +12,7 @@ public class FileWriter implements IWriter {
 
     private StringBuilder data;
     private String filename;
+    private Logger logger = LoggerFactory.getLogger(FileWriter.class);
     /**
      * constructor
      * @param filename name of writable file
@@ -21,10 +25,13 @@ public class FileWriter implements IWriter {
      * method writing data
      * @param string writable string
      */
-    public void printLine(final String string) {
-        data.append(string);
-        data.append("\n");
-
+    public void printLine(final String string) throws WritingException {
+        try {
+            data.append(string);
+            data.append("\n");
+        }catch (NullPointerException e) {
+            throw new WritingException(e);
+        }
     }
     /**
      * method return formatted lines
@@ -38,6 +45,7 @@ public class FileWriter implements IWriter {
     public void write() throws WritingException {
         try (java.io.FileWriter fileWriter = new java.io.FileWriter(filename)) {
             fileWriter.append(data);
+            logger.info("Save file: " + filename);
         } catch (IOException e) {
             throw new WritingException(e);
         }

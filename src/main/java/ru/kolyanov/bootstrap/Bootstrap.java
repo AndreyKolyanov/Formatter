@@ -14,7 +14,6 @@ import ru.kolyanov.output.WritingException;
 import ru.kolyanov.tables.FixedNewLineTable;
 import ru.kolyanov.tables.FixedOffsetTable;
 
-import java.util.IllegalFormatException;
 
 /**
  * bootstrap class
@@ -58,7 +57,7 @@ public final class Bootstrap {
             using();
         }
 
-        OffsetCalculator offsetCalculator = new OffsetCalculator(new FixedOffsetTable(), 4);
+        OffsetCalculator offsetCalculator = new OffsetCalculator(new FixedOffsetTable());
         Formatter formatter = new Formatter(new FixedNewLineTable(), offsetCalculator);
         formatter.format(reader, writer);
         writer.write();

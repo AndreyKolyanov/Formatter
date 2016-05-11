@@ -1,6 +1,5 @@
 package ru.kolyanov.formater;
 
-import ru.kolyanov.tables.INewLineTable;
 import ru.kolyanov.tables.IOffsetTable;
 import ru.kolyanov.tables.OffsetException;
 
@@ -16,11 +15,12 @@ public class OffsetCalculator {
 
     /**
      * constructor
+     * @param offsetTable info about offset
      */
-    public OffsetCalculator(IOffsetTable offsetTable, Integer offsetLength) {
+    public OffsetCalculator(final IOffsetTable offsetTable) {
         this.offsetTable = offsetTable.getOffsetTable();
         this.nestingLevel = offsetTable.getNestingLevelTable();
-        this.offsetLength = offsetLength;
+        this.offsetLength = offsetTable.getBaseOffset();
         this.currentNestingLevel = 0;
     }
 

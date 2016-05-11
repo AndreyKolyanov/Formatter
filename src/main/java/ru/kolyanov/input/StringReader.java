@@ -15,15 +15,19 @@ public class StringReader implements IReader {
      * @param data the input string
      * @throws ReaderException if file not found
      */
-    public StringReader(final String data) {
-        inputStream = new StringBufferInputStream(data);
+    public StringReader(final String data) throws ReaderException {
+        try {
+            inputStream = new StringBufferInputStream(data);
+        } catch (Exception e) {
+            throw new ReaderException(e);
+        }
     }
 
     @Override
     public int getSymbol() throws ReaderException {
         try {
             int code = inputStream.read();
-            if (code == -1){
+            if (code == -1) {
                 throw new ReaderException(new Exception("End o file"));
             }
             return code;

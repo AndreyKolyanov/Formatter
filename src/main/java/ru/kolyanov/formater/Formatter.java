@@ -18,10 +18,8 @@ public class Formatter implements IFormatter {
 
     private INewLineTable newLineTable;
     private OffsetCalculator offsetCalculator;
-    /**
-     * logger
-     */
-     final static Logger logger =  LoggerFactory.getLogger(Formatter.class);
+
+     private final Logger logger =  LoggerFactory.getLogger(Formatter.class);
     /**
      * constructor
      * @param newLineTable table for make new line
@@ -66,7 +64,10 @@ public class Formatter implements IFormatter {
             } finally {
                 try {
                     reader.close();
+                    writer.write();
                 } catch (IOException e) {
+                    throw new FormattingException(e);
+                } catch (WritingException e) {
                     throw new FormattingException(e);
                 }
             }

@@ -1,6 +1,5 @@
 package ru.kolyanov.tables;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,4 +39,10 @@ public class FixedOffsetTable implements IOffsetTable {
     public Map<Character, Integer> getNestingLevelTable() {
         return nestingLevel;
     }
+
+    @Override
+    public Integer getBaseOffset() {
+        return BASE_OFFSET_LENGTH;
+    }
+
 }

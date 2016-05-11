@@ -8,10 +8,25 @@ public class InputTests {
     IReader stringReader;
     @Test(expected = ReaderException.class)
     public void testInput() throws ReaderException {
-        stringReader  = new StringReader("qwe");
+        stringReader  = new StringReader("qw");
         assertEquals("input failed", stringReader.getSymbol(), 'q');
         assertEquals("input failed", stringReader.getSymbol(), 'w');
         assertEquals("input failed", stringReader.getSymbol(), 'e');
-        stringReader.getSymbol();
+    }
+
+    @Test(expected = ReaderException.class)
+    public void testInput2() throws ReaderException {
+        stringReader  = new StringReader(null);
+        assertEquals("input failed", stringReader.getSymbol(), 'q');
+        assertEquals("input failed", stringReader.getSymbol(), 'w');
+        assertEquals("input failed", stringReader.getSymbol(), 'e');
+    }
+
+    @Test(expected = ReaderException.class)
+    public void testInput3() throws ReaderException {
+        stringReader  = new FileReader("//");
+        assertEquals("input failed", stringReader.getSymbol(), 'q');
+        assertEquals("input failed", stringReader.getSymbol(), 'w');
+        assertEquals("input failed", stringReader.getSymbol(), 'e');
     }
 }

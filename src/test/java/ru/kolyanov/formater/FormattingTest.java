@@ -21,7 +21,7 @@ public class FormattingTest {
     public void formatting(String str, String actual) throws FormattingException, ReaderException{
         reader = new StringReader(str);
         writer = new StringWriter();
-        OffsetCalculator offsetCalculator = new OffsetCalculator(new FixedOffsetTable(), 4);
+        OffsetCalculator offsetCalculator = new OffsetCalculator(new FixedOffsetTable());
         formatter = new Formatter(new FixedNewLineTable(), offsetCalculator);
         formatter.format(reader, writer);
         assertEquals("fail", actual, writer.getLines());
@@ -42,5 +42,21 @@ public class FormattingTest {
     public void testFormatting3() throws FormattingException, ReaderException {
         formatting("{}", "{\n}\n");
     }
+
+    @Test(expected = ReaderException.class)
+    public void testFormatting4() throws FormattingException, ReaderException {
+        formatting(null, "{\n}\n");
+    }
+
+    @Test(expected = Exception.class)
+    public void testFormatting5() throws FormattingException, ReaderException {
+        reader = new FileReader("//");
+        writer = null;
+        OffsetCalculator offsetCalculator = null;
+        formatter = new Formatter(new FixedNewLineTable(), offsetCalculator);
+        formatter.format(reader, writer);
+        assertEquals("fail", "{}", writer.getLines());
+    }
+
 
 }
